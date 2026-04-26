@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexinIA — Automatización IA para Clínicas Dentales</title>
+    <meta name="description" content="Automatizamos la atención al cliente, la agenda y el seguimiento de pacientes de tu clínica dental con Inteligencia Artificial. Sin contratar más personal.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1D4ED8;
+            --primary-light: #DBEAFE;
+            --dark: #0F172A;
+            --dark-2: #1E293B;
+            --gray: #64748B;
+            --light: #F8FAFC;
+            --white: #FFFFFF;
+            --accent: #06B6D4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nav-logo { font-size: 1.5rem; font-weight: 800; color: white; letter-spacing: -0.5px; }
+        .nav-logo span { color: var(--accent); }
+
+        .nav-cta {
+            background: var(--primary);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--primary-dark); }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F2044 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 7rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(37,99,235,0.2);
+            border: 1px solid rgba(37,99,235,0.4);
+            color: #93C5FD;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .hero-badge::before { content: '●'; color: var(--accent); font-size: 0.6rem; }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #60A5FA, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #94A3B8;
+            max-width: 580px;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            box-shadow: 0 0 30px rgba(37,99,235,0.3);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 0 40px rgba(37,99,235,0.5); }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            flex-wrap: wrap;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #60A5FA, #06B6D4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label { font-size: 0.85rem; color: #64748B; margin-top: 0.2rem; }
+
+        /* SECTIONS */
+        .section { padding: 5rem 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-subtitle { font-size: 1.1rem; color: var(--gray); max-width: 580px; line-height: 1.7; }
+
+        /* PROBLEMA */
+        .problema { background: var(--light); }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(180deg, #EF4444, #F97316);
+        }
+        .problem-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .problem-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .problem-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+
+        /* SOLUCIÓN */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .solution-features { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .feature-item { display: flex; gap: 1rem; align-items: flex-start; }
+
+        .feature-icon {
+            width: 44px; height: 44px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .feature-text p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+
+        .solution-visual {
+            background: linear-gradient(135deg, #0F172A, #1E293B);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .chat-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+        .bot-label { color: #60A5FA; }
+        .user-label { color: #94A3B8; }
+
+        .chat-bubble {
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.8rem;
+            color: white;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .chat-bubble.bot { background: rgba(37,99,235,0.3); border: 1px solid rgba(37,99,235,0.3); margin-left: 1rem; }
+        .chat-bubble.user { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin-right: 1rem; }
+
+        /* CÓMO FUNCIONA */
+        .como-funciona { background: var(--light); }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 2.5rem;
+            left: 16%; right: 16%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .step-card { text-align: center; position: relative; z-index: 1; }
+
+        .step-number {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; font-weight: 800; color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 20px rgba(37,99,235,0.3);
+        }
+        .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .step-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+
+        /* PRUEBA SOCIAL */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .screenshot-card {
+            background: var(--dark);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .screenshot-header {
+            background: #1E293B;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-red { background: #EF4444; }
+        .dot-yellow { background: #F59E0B; }
+        .dot-green { background: #10B981; }
+        .screenshot-title { font-size: 0.8rem; color: #64748B; margin-left: 0.5rem; }
+
+        .screenshot-body { padding: 1.5rem; }
+
+        .whatsapp-msg {
+            background: #1E3A5F;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+            color: #E2E8F0;
+            line-height: 1.5;
+            border-left: 3px solid var(--primary);
+        }
+        .whatsapp-msg.response { background: #164E32; border-left-color: #10B981; margin-left: 1.5rem; }
+        .msg-time { font-size: 0.7rem; color: #475569; margin-top: 0.3rem; text-align: right; }
+
+        .metric-card {
+            background: #1E293B;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .metric-icon { font-size: 1.5rem; }
+        .metric-value { font-size: 1.5rem; font-weight: 800; color: white; }
+        .metric-label { font-size: 0.75rem; color: #64748B; }
+
+        /* SERVICIOS */
+        .servicios { background: var(--light); }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .plan-card {
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .plan-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+
+        .plan-card.featured {
+            background: linear-gradient(135deg, #0F172A, #1E293B);
+            color: white;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card.featured::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(37,99,235,0.2) 0%, transparent 70%);
+        }
+
+        .plan-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .plan-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .plan-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.5; margin-bottom: 1.5rem; }
+        .plan-card.featured .plan-desc { color: #94A3B8; }
+
+        .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+        .plan-features li { font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem; color: var(--dark); }
+        .plan-card.featured .plan-features li { color: #E2E8F0; }
+        .check { color: #10B981; font-weight: 700; flex-shrink: 0; }
+
+        .plan-cta {
+            display: block;
+            text-align: center;
+            padding: 0.9rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .plan-cta.light { background: var(--primary-light); color: var(--primary); }
+        .plan-cta.light:hover { background: var(--primary); color: white; }
+        .plan-cta.dark { background: var(--primary); color: white; box-shadow: 0 0 20px rgba(37,99,235,0.3); }
+        .plan-cta.dark:hover { background: var(--primary-dark); }
+
+        /* CTA FINAL */
+        .cta-final {
+            background: linear-gradient(135deg, #0F172A, #0F2044);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+        }
+        .cta-final h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: white; letter-spacing: -1px; margin-bottom: 1rem; position: relative; }
+        .cta-final p { font-size: 1.1rem; color: #64748B; margin-bottom: 2.5rem; position: relative; }
+
+        /* FOOTER */
+        footer { background: #0F172A; padding: 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer p { color: #334155; font-size: 0.85rem; }
+        footer span { color: var(--accent); }
+
+        /* ANIMATIONS */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .solution-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .steps-grid::before { display: none; }
+            .hero-stats { gap: 1.5rem; }
+            nav { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-logo">Nexin<span>IA</span></div>
+    <a href="TU_LINK_DE_CALENDLY" class="nav-cta" target="_blank">Agendar llamada →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">Especialistas en clínicas dentales</div>
+        <h1>Tu clínica dental <span>atiende sola</span> — mientras tú duermes.</h1>
+        <p>Automatizamos la atención al cliente, la agenda y el seguimiento de pacientes con Inteligencia Artificial. Sin contratar más personal.</p>
+        <div class="hero-buttons">
+            <a href="TU_LINK_DE_CALENDLY" class="btn-primary" target="_blank">Agenda tu diagnóstico gratuito →</a>
+            <a href="#como-funciona" class="btn-secondary">Ver cómo funciona</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Atención sin interrupciones</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">-80%</div>
+                <div class="stat-label">Mensajes sin responder</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">+40%</div>
+                <div class="stat-label">Citas confirmadas</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="section problema">
+    <div class="container">
+        <div class="fade-in">
+            <div class="section-label">El problema</div>
+            <h2 class="section-title">Tu clínica pierde pacientes<br>todos los días sin saberlo.</h2>
+            <p class="section-subtitle">Cada mensaje sin respuesta es un paciente que se fue a la competencia. Así pasa en la mayoría de clínicas dentales.</p>
+        </div>
+        <div class="problems-grid">
+            <div class="problem-card fade-in">
+                <div class="problem-icon">📱</div>
+                <h3>WhatsApp sin atender</h3>
+                <p>Los pacientes escriben fuera de horario y nadie responde. Al día siguiente ya eligieron otra clínica.</p>
+            </div>
+            <div class="problem-card fade-in">
+                <div class="problem-icon">📅</div>
+                <h3>No-shows que cuestan caro</h3>
+                <p>Sin recordatorios automáticos, entre el 20% y 30% de los pacientes simplemente no aparece.</p>
+            </div>
+            <div class="problem-card fade-in">
+                <div class="problem-icon">🔁</div>
+                <h3>Preguntas repetitivas</h3>
+                <p>Tu equipo responde lo mismo 30 veces al día: precios, horarios, ubicación. Tiempo que se desperdicia.</p>
+            </div>
+            <div class="problem-card fade-in">
+                <div class="problem-icon">💸</div>
+                <h3>Leads que se enfrían</h3>
+                <p>Un prospecto que no recibe respuesta en los primeros 5 minutos tiene 80% menos probabilidad de convertir.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUCIÓN -->
+<section class="section">
+    <div class="container">
+        <div class="solution-grid">
+            <div class="fade-in">
+                <div class="section-label">La solución</div>
+                <h2 class="section-title">Un agente IA que trabaja por ti las 24 horas.</h2>
+                <p class="section-subtitle" style="margin-bottom: 2rem;">Respondemos, agendamos y hacemos seguimiento automático para que tu equipo se enfoque en lo que importa: atender pacientes.</p>
+                <div class="solution-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-text">
+                            <h3>Respuesta inmediata en WhatsApp</h3>
+                            <p>El agente responde en segundos, califica al paciente y agenda la cita sin intervención humana.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📆</div>
+                        <div class="feature-text">
+                            <h3>Agenda automática</h3>
+                            <p>Se integra con tu sistema actual. El paciente elige su horario y queda confirmado al instante.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔔</div>
+                        <div class="feature-text">
+                            <h3>Recordatorios y seguimiento</h3>
+                            <p>Recordatorios automáticos antes de cada cita. Seguimiento post-consulta para fidelizar al paciente.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h3>Dashboard en tiempo real</h3>
+                            <p>Ve cuántos pacientes atendió el agente, citas generadas y mensajes respondidos en un solo panel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="solution-visual fade-in">
+                <div class="chat-label bot-label">Agente NexinIA</div>
+                <div class="chat-bubble bot">Hola 👋 Soy el asistente virtual de la Clínica Dental. ¿En qué puedo ayudarte hoy?</div>
+                <div class="chat-label user-label" style="margin-top:1rem;">Paciente</div>
+                <div class="chat-bubble user">Quiero saber cuánto cuesta una limpieza dental y si tienen citas esta semana</div>
+                <div class="chat-label bot-label" style="margin-top:1rem;">Agente NexinIA</div>
+                <div class="chat-bubble bot">¡Claro! La limpieza dental cuesta $45. Tenemos disponibilidad el miércoles a las 10am y el viernes a las 3pm. ¿Cuál te viene mejor? 😊</div>
+                <div class="chat-label user-label" style="margin-top:1rem;">Paciente</div>
+                <div class="chat-bubble user">El miércoles perfecto</div>
+                <div class="chat-label bot-label" style="margin-top:1rem;">Agente NexinIA</div>
+                <div class="chat-bubble bot">✅ ¡Listo! Tu cita está confirmada para el miércoles a las 10am. Te enviaré un recordatorio el día anterior. ¿Necesitas algo más?</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section como-funciona" id="como-funciona">
+    <div class="container">
+        <div class="fade-in" style="text-align: center; margin-bottom: 1rem;">
+            <div class="section-label">El proceso</div>
+            <h2 class="section-title">En 3 pasos tu clínica ya está automatizada.</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card fade-in">
+                <div class="step-number">1</div>
+                <h3>Diagnóstico gratuito</h3>
+                <p>Analizamos tu clínica y tus procesos actuales. Definimos exactamente qué automatizar para generar más ingresos.</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-number">2</div>
+                <h3>Implementación en 7 días</h3>
+                <p>Configuramos el agente IA con el lenguaje y los procesos de tu clínica. Sin interrumpir tu operación diaria.</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-number">3</div>
+                <h3>Tu clínica trabaja sola</h3>
+                <p>Desde el día 1 el agente atiende, agenda y hace seguimiento. Tú ves los resultados en tu panel de control.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRUEBA SOCIAL -->
+<section class="section">
+    <div class="container">
+        <div class="fade-in" style="text-align: center; margin-bottom: 1rem;">
+            <div class="section-label">Prueba real</div>
+            <h2 class="section-title">Esto es lo que ve un paciente<br>cuando escribe a tu clínica.</h2>
+            <p class="section-subtitle" style="margin: 0 auto;">Respuesta inmediata, profesional y disponible las 24 horas. Sin que nadie de tu equipo haga nada.</p>
+        </div>
+        <div class="screenshots-grid">
+            <div class="screenshot-card fade-in">
+                <div class="screenshot-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span class="screenshot-title">WhatsApp — Agente activo</span>
+                </div>
+                <div class="screenshot-body">
+                    <div class="whatsapp-msg">
+                        Buenas noches, ¿tienen turno disponible para mañana?
+                        <div class="msg-time">11:47 PM</div>
+                    </div>
+                    <div class="whatsapp-msg response">
+                        ¡Buenas noches! 😊 Sí tenemos disponibilidad mañana a las 9am, 11am y 4pm. ¿Cuál te queda mejor?
+                        <div class="msg-time">11:47 PM ✓✓</div>
+                    </div>
+                    <div class="whatsapp-msg">
+                        A las 9am por favor
+                        <div class="msg-time">11:48 PM</div>
+                    </div>
+                    <div class="whatsapp-msg response">
+                        ✅ ¡Perfecto! Cita confirmada para mañana a las 9am. ¿Me confirmas tu nombre completo?
+                        <div class="msg-time">11:48 PM ✓✓</div>
+                    </div>
+                </div>
+            </div>
+            <div class="screenshot-card fade-in">
+                <div class="screenshot-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <span class="screenshot-title">Dashboard — Métricas del agente</span>
+                </div>
+                <div class="screenshot-body">
+                    <div class="metric-card">
+                        <div class="metric-icon">💬</div>
+                        <div>
+                            <div class="metric-value">247</div>
+                            <div class="metric-label">Mensajes respondidos este mes</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📅</div>
+                        <div>
+                            <div class="metric-value">38</div>
+                            <div class="metric-label">Citas agendadas automáticamente</div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⚡</div>
+                        <div>
+                            <div class="metric-value">&lt; 3s</div>
+                            <div class="metric-label">Tiempo promedio de respuesta</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section servicios">
+    <div class="container">
+        <div class="fade-in" style="text-align: center; margin-bottom: 1rem;">
+            <div class="section-label">Servicios</div>
+            <h2 class="section-title">Elige el plan que tu clínica necesita.</h2>
+            <p class="section-subtitle" style="margin: 0 auto;">Cada implementación incluye configuración, capacitación y soporte continuo.</p>
+        </div>
+        <div class="plans-grid">
+            <div class="plan-card fade-in">
+                <div class="plan-name">Esencial</div>
+                <div class="plan-desc">Para clínicas que quieren empezar a automatizar su atención al cliente por WhatsApp.</div>
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Agente IA de texto en WhatsApp</li>
+                    <li><span class="check">✓</span> Respuestas a preguntas frecuentes</li>
+                    <li><span class="check">✓</span> Captura de datos del paciente</li>
+                    <li><span class="check">✓</span> Soporte mensual incluido</li>
+                </ul>
+                <a href="TU_LINK_DE_CALENDLY" class="plan-cta light" target="_blank">Agendar llamada →</a>
+            </div>
+            <div class="plan-card featured fade-in">
+                <div class="plan-badge">Más popular</div>
+                <div class="plan-name" style="color: white;">Completo</div>
+                <div class="plan-desc">Automatización completa: atención, agenda, recordatorios y seguimiento de pacientes.</div>
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Todo lo del plan Esencial</li>
+                    <li><span class="check">✓</span> Agendamiento automático de citas</li>
+                    <li><span class="check">✓</span> Recordatorios anti no-show</li>
+                    <li><span class="check">✓</span> Seguimiento post-consulta</li>
+                    <li><span class="check">✓</span> Dashboard de métricas</li>
+                    <li><span class="check">✓</span> Integración con tu CRM</li>
+                </ul>
+                <a href="TU_LINK_DE_CALENDLY" class="plan-cta dark" target="_blank">Agendar llamada →</a>
+            </div>
+            <div class="plan-card fade-in">
+                <div class="plan-name">Premium</div>
+                <div class="plan-desc">Para grupos de clínicas o clínicas con alto volumen que necesitan IA de voz + texto.</div>
+                <ul class="plan-features">
+                    <li><span class="check">✓</span> Todo lo del plan Completo</li>
+                    <li><span class="check">✓</span> Agente IA de voz (llamadas)</li>
+                    <li><span class="check">✓</span> Automatización multi-canal</li>
+                    <li><span class="check">✓</span> Reportes avanzados</li>
+                    <li><span class="check">✓</span> Gerente de cuenta dedicado</li>
+                </ul>
+                <a href="TU_LINK_DE_CALENDLY" class="plan-cta light" target="_blank">Agendar llamada →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+    <div class="container" style="position: relative; z-index: 1;">
+        <h2 class="fade-in">¿Listo para que tu clínica<br>trabaje sola?</h2>
+        <p class="fade-in">Agenda una llamada de diagnóstico gratuita de 30 minutos.<br>Sin compromiso. Te decimos exactamente qué automatizar y cuánto puedes ganar.</p>
+        <a href="TU_LINK_DE_CALENDLY" class="btn-primary fade-in" target="_blank" style="display: inline-flex; font-size: 1.1rem; padding: 1.1rem 2.5rem;">
+            Agenda tu diagnóstico gratuito →
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2025 <span>NexinIA</span> · Automatización con Inteligencia Artificial · <a href="mailto:kleyberpillaca@gmail.com" style="color: #475569; text-decoration: none;">hola@nexinia.org</a></p>
+</footer>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
